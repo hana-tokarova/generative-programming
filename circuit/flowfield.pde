@@ -13,22 +13,13 @@ public class FlowField {
   }
 
   void initialize() {
-    float yoff = 0;
     for (int y = 0; y < rows; y++) {
-      float xoff = 0;
       for (int x = 0; x < cols; x++) {
-        noiseDetail(3, 0.5);
-        float angle = noise(xoff, yoff) * PI * 4;
+        float angle = noise(x * inc, y * inc) * PI * 4;
         angle = round(angle / (PI / 4)) * (PI / 4);
         PVector v = PVector.fromAngle(angle);
-        v.setMag(1);
-        
-        int index = x + y * cols;
-        vectors[index] = v;
-
-        xoff += inc;
+        vectors[y][x] = v;
       }
-      yoff += inc;
     }
   }
 

@@ -16,10 +16,10 @@ public class Particle {
 
   void run() {
     edges();
-    show();
+    follow();
   }
 
-  void show() {
+  void follow() {
     strokeWeight(3);
     stroke(#4a8b63, 100);
 
@@ -30,6 +30,16 @@ public class Particle {
     } else {
       point(pos.x, pos.y);
     }
+    
+    int x = floor(pos.x / flowfield.scl);
+    int y = floor(pos.y / flowfield.scl);
+
+    PVector direction = flowfield.vectors[y][x];
+    
+    line(pos.x, pos.y, pos.x + direction.x * res, pos.y + direction.y * res);
+    
+    pos.x += direction.x * res;
+    pos.y += direction.y * res;
 
     updatePreviousPos();
   }
@@ -56,16 +66,5 @@ public class Particle {
   void updatePreviousPos() {
     this.previousPos.x = pos.x;
     this.previousPos.y = pos.y;
-  }
-
-  void follow(FlowField flowfield) {
-    int x = floor(pos.x / flowfield.scl);
-    int y = floor(pos.y / flowfield.scl);
-    int index = x + y * flowfield.cols;
-
-    PVector direction = flowfield.vectors[index];
-    
-    pos.x += direction.x;
-    pos.y += direction.y;
   }
 }
