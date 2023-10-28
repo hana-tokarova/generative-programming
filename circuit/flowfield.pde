@@ -1,6 +1,6 @@
 
 public class FlowField {
-  PVector[] vectors;
+  PVector[][] vectors;
   int cols, rows;
   float inc = 0.1;
   int scl;
@@ -9,7 +9,7 @@ public class FlowField {
     scl = res;
     cols = floor(width / res) + 1;
     rows = floor(height / res) + 1;
-    vectors = new PVector[cols * rows];
+    vectors = new PVector[cols][rows];
   }
 
   void initialize() {
@@ -26,15 +26,17 @@ public class FlowField {
   void display() {
     for (int y = 0; y < rows; y++) {
       for (int x = 0; x < cols; x++) {
-        int index = x + y * cols;
-        PVector v = vectors[index];
+        PVector v = vectors[y][x];
 
-        stroke(255, 255, 255, 100);
-        strokeWeight(0.1);
         pushMatrix();
+        stroke(0, 0, 255);
+        noFill();
+        strokeWeight(0.1);
         translate(x * scl, y * scl);
+        square(0, 0, scl); // looking at the flowfield grid
         rotate(v.heading());
-        line(0, 0, scl, 0);
+        stroke(255, 255, 255);
+        line(0, 0, scl, 0); // looking at vectors
         popMatrix();
       }
     }
