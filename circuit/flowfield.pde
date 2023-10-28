@@ -1,6 +1,8 @@
 
 public class FlowField {
   PVector[][] vectors;
+  boolean[][] capacity;
+  
   int cols, rows;
   float inc = 0.1;
   int scl;
@@ -10,6 +12,7 @@ public class FlowField {
     cols = floor(width / res) + 1;
     rows = floor(height / res) + 1;
     vectors = new PVector[cols][rows];
+    capacity = new boolean[cols][rows];
   }
 
   void initialize() {

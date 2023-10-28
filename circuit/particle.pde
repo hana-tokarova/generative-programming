@@ -1,15 +1,10 @@
 
 public class Particle {
   PVector pos;
-  PVector vel;
-  PVector acc;
-
   boolean start = true;
 
   Particle(PVector start) {
     pos = start;
-    vel = new PVector(0, 0);
-    acc = new PVector(0, 0);
   }
 
   void run() {
@@ -31,14 +26,12 @@ public class Particle {
     
     int x = floor(pos.x / flowfield.scl);
     int y = floor(pos.y / flowfield.scl);
-    PVector direction = flowfield.vectors[y][x];
+    PVector direction = flowfield.vectors[y][x]; // tu na tomto mieste riesit capacity daneho bloku
     
     line(pos.x, pos.y, pos.x + direction.x * res, pos.y + direction.y * res); // todo ked to bude uhlopriecka bude to trochu dlhsie
     
     pos.x += direction.x * res;
     pos.y += direction.y * res;
-
-    //updatePreviousPos();
   }
 
   void edges() {

@@ -21,8 +21,8 @@ void setup() {
   flowfield.initialize();
 
   particles = new ArrayList<Particle>();
-  for (int i = 0; i < 100; i++) {
-    PVector start = new PVector(floor(random(width) / res) * res, floor(random(height) / res) * res); // mozno iba potom zmenit na random(width), random(height)
+  for (int i = 0; i < 25; i++) {
+    PVector start = new PVector(random(width), random(height)); // floor(random(width) / res) * res, floor(random(height) / res) * res
     particles.add(new Particle(start));
   }
   
