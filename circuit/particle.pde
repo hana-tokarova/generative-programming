@@ -5,39 +5,33 @@ public class Particle {
   PVector acc;
   PVector previousPos;
 
-  int len;
-  int lenCopy;
+  boolean start = true;
 
   Particle(PVector start) {
     pos = start;
     vel = new PVector(0, 0);
     acc = new PVector(0, 0);
     previousPos = pos.copy();
-    len = round(random(100, 500));
-    lenCopy = len;
   }
 
   void run() {
     edges();
-    
-    if (len > 0) {
-      show();
-    }
+    show();
   }
 
   void show() {
     strokeWeight(3);
     stroke(#4a8b63, 100);
 
-    if ((len == lenCopy) || len < 2) {
+    if (start) {
       fill(#4a8b63);
-      circle(pos.x, pos.y, 10);
+      circle(pos.x, pos.y, 7);
+      start = !start;
     } else {
       point(pos.x, pos.y);
     }
 
     updatePreviousPos();
-    len--;
   }
 
   void edges() {
@@ -70,7 +64,7 @@ public class Particle {
     int index = x + y * flowfield.cols;
 
     PVector direction = flowfield.vectors[index];
-
+    
     pos.x += direction.x;
     pos.y += direction.y;
   }
