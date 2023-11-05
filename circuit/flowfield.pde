@@ -21,7 +21,9 @@ public class FlowField {
         float angle = noise(x * inc, y * inc) * PI * 4;
         angle = round(angle / (PI / 4)) * (PI / 4);
         PVector v = PVector.fromAngle(angle);
+        v.setMag(1);
         vectors[y][x] = v;
+        capacity[y][x] = false;
       }
     }
   }

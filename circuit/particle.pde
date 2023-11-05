@@ -2,14 +2,17 @@
 public class Particle {
   PVector pos;
   boolean start = true;
+  boolean alive = true;
 
   Particle(PVector start) {
     pos = start;
   }
 
   void run() {
-    edges();
-    follow();
+    if (alive) {
+      edges();
+      follow();
+    }
   }
 
   void follow() {
@@ -26,12 +29,45 @@ public class Particle {
     
     int x = floor(pos.x / flowfield.scl);
     int y = floor(pos.y / flowfield.scl);
-    PVector direction = flowfield.vectors[y][x]; // tu na tomto mieste riesit capacity daneho bloku
+    PVector direction = flowfield.vectors[y][x];
     
-    line(pos.x, pos.y, pos.x + direction.x * res, pos.y + direction.y * res); // todo ked to bude uhlopriecka bude to trochu dlhsie
+    int newX = x;
+    int newY = y;
+ 
+    if (direction.x > 0.1) {
+      newX += 1;
+    } else if (direction.x < -0.1) {
+      newX -= 1;
+    }
     
-    pos.x += direction.x * res;
-    pos.y += direction.y * res;
+    if (newX * res > width || newX < 0) {
+       kill();
+       return;
+    }
+    
+    if (direction.y > 0.1) {
+      newY += 1;
+    } else if (direction.y < -0.1) {
+      newY -= 1;
+    }
+    
+    if (newY * res > height || newY < 0) {
+      kill();
+      return;
+    }
+    
+    
+    if (flowfield.capacity[newY][newX]) {
+       kill();
+       return;
+    }
+    
+    flowfield.capacity[newY][newX] = true;
+    
+    line(pos.x, pos.y, newX * res, newY * res);
+    
+    pos.x = newX * res;
+    pos.y = newY * res;
   }
 
   void edges() {
@@ -47,5 +83,11 @@ public class Particle {
     if (pos.y < 0) {
       pos.y = height;
     }
+  }
+  
+  void kill() {
+    alive = false;
+    fill(#4a8b63);
+    circle(pos.x, pos.y, 7);
   }
 }

@@ -5,7 +5,7 @@ FlowField flowfield;
 ArrayList<Particle> particles;
 
 boolean debug = false;
-boolean savePDF = false;
+boolean savePDF = true;
 
 int res = 20;
 
@@ -21,14 +21,18 @@ void setup() {
   flowfield.initialize();
 
   particles = new ArrayList<Particle>();
-  for (int i = 0; i < 25; i++) {
-    PVector start = new PVector(random(width), random(height)); // floor(random(width) / res) * res, floor(random(height) / res) * res
+  for (int i = 0; i < 50; i++) {
+    int relativeX = floor(random(width / res));
+    int relativeY = floor(random(height / res));
+    PVector start = new PVector(relativeX * res, relativeY * res);
+    flowfield.capacity[relativeY][relativeX] = true;
+    
     particles.add(new Particle(start));
   }
   
   if (savePDF) {
     timestamp = year() + nf(month(), 2) + nf(day(), 2) + "_" + nf(hour(), 2) + nf(minute(), 2);
-    beginRecord(PDF, "svg/circuit_" + timestamp + ".pdf");
+    beginRecord(PDF, "pdf/circuit_" + timestamp + ".pdf");
     println("Started creating a .pdf ...");
   }
 }
