@@ -14,7 +14,7 @@ String timestamp;
 
 void setup() {
   size(800, 800);
-  background(#808080);
+  background(#FFFFFF);
 
   flowfield = new FlowField(res);
   flowfield.initialize();
@@ -49,8 +49,10 @@ void keyPressed() {
     timestamp = year() + nf(month(), 2) + nf(day(), 2) + "_" + nf(hour(), 2) + nf(minute(), 2) + nf(second(), 2);
     beginRecord(PDF, "pdf/circuit_" + timestamp + ".pdf");
     
-    multiplier = round(random(1, 10));
+    background(#FFFFFF);
     
+    multiplier = round(random(1, 10));
+
     flowfield = new FlowField(res);
     flowfield.initialize();
 
