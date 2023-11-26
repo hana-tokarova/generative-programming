@@ -17,10 +17,10 @@ public class Particle {
 
   void follow() {
     strokeWeight(3);
-    stroke(#4a8b63);
+    stroke(#000000);
 
     if (start) {
-      fill(#4a8b63);
+      fill(#000000);
       circle(pos.x, pos.y, 7);
       start = !start;
     } else {
@@ -87,7 +87,7 @@ public class Particle {
   
   void kill() {
     alive = false;
-    fill(#4a8b63);
+    fill(#000000);
     circle(pos.x, pos.y, 7);
   }
 }

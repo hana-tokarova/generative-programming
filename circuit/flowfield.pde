@@ -18,7 +18,7 @@ public class FlowField {
   void initialize() {
     for (int y = 0; y < rows; y++) {
       for (int x = 0; x < cols; x++) {
-        float angle = noise(x * inc, y * inc) * PI * 4;
+        float angle = noise(x * inc, y * inc) * PI * multiplier;
         angle = round(angle / (PI / 4)) * (PI / 4);
         PVector v = PVector.fromAngle(angle);
         v.setMag(1);

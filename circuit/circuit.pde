@@ -8,46 +8,60 @@ boolean debug = false;
 boolean savePDF = true;
 
 int res = 20;
+int multiplier = 3;
 
 String timestamp;
 
 void setup() {
   size(800, 800);
-  background(#084921);  
-  //randomSeed(0);
-  //noiseSeed(0);
-  
+  background(#808080);
+
   flowfield = new FlowField(res);
   flowfield.initialize();
 
   particles = new ArrayList<Particle>();
-  for (int i = 0; i < 50; i++) {
+  for (int i = 0; i < 100; i++) {
     int relativeX = floor(random(width / res));
     int relativeY = floor(random(height / res));
     PVector start = new PVector(relativeX * res, relativeY * res);
     flowfield.capacity[relativeY][relativeX] = true;
-    
+
     particles.add(new Particle(start));
   }
-  
-  if (savePDF) {
-    timestamp = year() + nf(month(), 2) + nf(day(), 2) + "_" + nf(hour(), 2) + nf(minute(), 2);
-    beginRecord(PDF, "pdf/circuit_" + timestamp + ".pdf");
-    println("Started creating a .pdf ...");
-  }
+
+  timestamp = year() + nf(month(), 2) + nf(day(), 2) + "_" + nf(hour(), 2) + nf(minute(), 2) + nf(second(), 2);
+  beginRecord(PDF, "pdf/circuit_" + timestamp + ".pdf");
+  println("Started creating a .pdf ...");
 }
 
-void draw() {     
+void draw() {
   for (Particle p : particles) {
     p.run();
   }
-  
+
   if (debug) flowfield.display();
 }
 
-void mousePressed() {
-  if (savePDF) {
+void keyPressed() {
+  switch(key) {
+  case 's':
     endRecord();
-    println("Screenshot saved as .pdf!"); 
+    timestamp = year() + nf(month(), 2) + nf(day(), 2) + "_" + nf(hour(), 2) + nf(minute(), 2) + nf(second(), 2);
+    beginRecord(PDF, "pdf/circuit_" + timestamp + ".pdf");
+    
+    multiplier = round(random(1, 10));
+    
+    flowfield = new FlowField(res);
+    flowfield.initialize();
+
+    particles = new ArrayList<Particle>();
+    for (int i = 0; i < 100; i++) {
+      int relativeX = floor(random(width / res));
+      int relativeY = floor(random(height / res));
+      PVector start = new PVector(relativeX * res, relativeY * res);
+      flowfield.capacity[relativeY][relativeX] = true;
+      particles.add(new Particle(start));
+    }
+    break;
   }
 }
